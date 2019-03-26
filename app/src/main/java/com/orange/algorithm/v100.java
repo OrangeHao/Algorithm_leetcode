@@ -121,4 +121,48 @@ public class v100 {
         }
         return ans;
     }
+
+    public int lengthOfLastWord(String s) {
+        int result=0;
+        for (int i = s.length()-1; i >0; i--) {
+            if (s.charAt(i)==' '){
+                if (result>0){
+                    return result;
+                }
+                result=0;
+            }else {
+                result++;
+            }
+        }
+        return result;
+    }
+
+    public int[] plusOne(int[] digits) {
+        int len=digits.length;
+        int upNum=0;
+        for (int i = len-1; i >=0 ; i--) {
+            int temp=digits[i]+upNum;
+            upNum=0;
+            if (i==len-1){
+                temp+=1;
+            }
+            if (temp>=10){
+                upNum=1;
+                digits[i]=temp%10;
+            }else {
+                digits[i]=temp;
+            }
+            if (upNum==0){
+                return digits;
+            }else if (i==0){
+                int[] res=new int[digits.length+1];
+                res[0]=1;
+                for (int j = 0; j < digits.length; j++) {
+                    res[j+1]=digits[j];
+                }
+                return res;
+            }
+        }
+        return digits;
+    }
 }
