@@ -122,6 +122,7 @@ public class v100 {
         return ans;
     }
 
+    //58. 最后一个单词的长度
     public int lengthOfLastWord(String s) {
         int result=0;
         for (int i = s.length()-1; i >0; i--) {
@@ -137,6 +138,7 @@ public class v100 {
         return result;
     }
 
+    //66. 加一
     public int[] plusOne(int[] digits) {
         int len=digits.length;
         int upNum=0;
