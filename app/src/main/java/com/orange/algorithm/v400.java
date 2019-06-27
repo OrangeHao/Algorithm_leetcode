@@ -57,4 +57,31 @@ public class v400 {
         }
         return result;
     }
+
+    //389. 找不同
+    public char findTheDifference(String s, String t) {
+        int sum=0;
+        for (int i = 0; i < s.length(); i++) {
+            sum+=t.charAt(i);
+            sum-=s.charAt(i);
+        }
+        sum+=t.charAt(t.length()-1);
+        return (char) sum;
+    }
+
+    //371. 两整数之和
+    public int getSum(int a, int b) {
+        int sum, carry;
+        sum = a ^ b;
+        carry = (a & b) << 1;
+        if(carry != 0)
+        {
+            return getSum(sum, carry);
+        }
+        return sum;
+    }
+
+    public boolean isPowerOfFour(int num) {
+        return num>0 && (num&-num)==num && (num&(0x55555555))==num;
+    }
 }

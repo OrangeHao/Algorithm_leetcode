@@ -1,7 +1,9 @@
 package com.orange.algorithm;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -179,5 +181,38 @@ public class v100 {
             head=head.next;
         }
         return head;
+    }
+
+
+    //78. 子集
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res=new ArrayList<>();
+        res.add(new ArrayList<Integer>());
+        for (int i = 0; i <nums.length; i++) {
+            int size=res.size();
+            for (int j = 0; j < size; j++) {
+                List<Integer> temp = new ArrayList<>(res.get(j));
+                temp.add(nums[i]);
+                res.add(temp);
+            }
+        }
+        return res;
+    }
+    public List<List<Integer>> subsets2(int[] nums) {
+        List<List<Integer>> res=new ArrayList<>();
+        res.add(new ArrayList<Integer>());
+        int size=nums.length;
+        int total=2<<(size-1);
+        for (int i = 0; i <total; i++) {
+            List<Integer> temp = new ArrayList<>();
+            for (int j = 0; j < size; j++) {
+                int a=1<<j;
+                if((a&i)==a){
+                    temp.add(nums[j]);
+                }
+            }
+            res.add(temp);
+        }
+        return res;
     }
 }

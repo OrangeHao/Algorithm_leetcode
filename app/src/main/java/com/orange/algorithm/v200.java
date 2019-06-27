@@ -1,7 +1,11 @@
 package com.orange.algorithm;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 
 import com.orange.algorithm.DataStructure.ListNode;
 
@@ -137,5 +141,88 @@ public class v200 {
             }
         }
         return ret;
+    }
+
+    //136. 只出现一次的数字
+    public int singleNumber(int[] nums) {
+        int ret=0;
+        for (int temp:nums){
+            ret^=temp;
+        }
+        return ret;
+    }
+
+    //191. 位1的个数
+    // you need to treat n as an unsigned value
+    public int hammingWeight(int n) {
+        int ret=0;
+        while (n>0){
+            ret=ret+(n&1);
+            n>>=1;
+        }
+        return ret;
+    }
+
+
+    //二叉树的层次遍历 II
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+
+    }
+
+    //144. 二叉树的前序遍历
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> result=new ArrayList<>();
+        preorder(result,root);
+        return result;
+    }
+
+    public void preorder(List<Integer> list,TreeNode node){
+        if (node==null){
+            return;
+        }
+        list.add(node.val);
+        if (node.left!=null ){
+            preorder(list,node.left);
+        }
+        if (node.right!=null){
+            preorder(list,node.right);
+        }
+    }
+
+    public List<Integer> preorderTraversal2(TreeNode root) {
+        LinkedList<TreeNode> stack=new LinkedList<>();
+        List<Integer> outPut=new ArrayList<>();
+        if (root==null){
+            return outPut;
+        }
+        stack.add(root);
+        while (!stack.isEmpty()){
+            TreeNode node=stack.pollLast();
+            outPut.add(node.val);
+            if (node.right!=null){
+                stack.add(node.right);
+            }
+            if (node.left!=null){
+                stack.add(node.left);
+            }
+        }
+        return outPut;
+    }
+
+    //94. 二叉树的中序遍历
+    public List<Integer> inorderTraversal(TreeNode root) {
+        Stack<TreeNode> stack=new Stack<>();
+        List<Integer> result=new ArrayList<>();
+        TreeNode cur=root;
+        while (cur!=null || !stack.isEmpty()){
+            while (cur!=null){
+                stack.add(cur);
+                cur=cur.left;
+            }
+            cur=stack.pop();
+            result.add(cur.val);
+            cur=cur.right;
+        }
+        return result;
     }
 }
