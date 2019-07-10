@@ -1,11 +1,14 @@
 package com.orange.algorithm;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
+import java.util.logging.Level;
 
 import com.orange.algorithm.DataStructure.ListNode;
 
@@ -225,4 +228,122 @@ public class v200 {
         }
         return result;
     }
+
+    //107. 二叉树的层次遍历 II
+    public List<List<Integer>> levelOrderBottom2(TreeNode root) {
+        Queue<TreeNode> queue=new LinkedList<>();
+        List<List<Integer>> result=new LinkedList<>();
+        if (root==null){
+            return result;
+        }
+        queue.add(root);
+        while (!queue.isEmpty()){
+            result.add(0,new ArrayList<Integer>());
+            int size=queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode temp=queue.poll();
+                result.get(0).add(temp.val);
+                if (temp.left!=null){
+                    queue.add(temp.left);
+                }
+                if (temp.right!=null){
+                    queue.add(temp.right);
+                }
+            }
+        }
+        return result;
+    }
+
+    public List<List<Integer>> levelOrderBottom3(TreeNode root) {
+        List<List<Integer>> result=new ArrayList<>();
+        helper(result,root,0);
+        Collections.reverse(result);
+        return result;
+    }
+
+    public void helper(List<List<Integer>> list, TreeNode node, int level){
+        if (node==null){
+            return;
+        }
+        if (list.size()==level){
+            list.add(new ArrayList<Integer>());
+        }
+        list.get(level).add(node.val);
+        if (node.left!=null){
+            helper(list,node.left,level+1);
+        }
+        if (node.right!=null){
+            helper(list,node.right,level+1);
+        }
+    }
+
+
+    //111. 二叉树的最小深度
+    public int minDepth(TreeNode root) {
+        if (root==null){
+            return 0;
+        }
+
+        if (root.left==null && root.right==null){
+            return 1;
+        }
+
+        int mindep=Integer.MAX_VALUE;
+        if (root.left!=null){
+            mindep=Math.min(minDepth(root.left),mindep);
+        }
+        if (root.right!=null){
+            mindep=Math.min(minDepth(root.right),mindep);
+        }
+        return mindep+1;
+
+    }
+
+    //112. 路径总和
+    public boolean hasPathSum(TreeNode root, int sum) {
+        return sum(root,sum,0);
+    }
+
+    private boolean sum(TreeNode node,int sum,int cur){
+        if (node==null){
+            return false;
+        }
+        cur=cur+node.val;
+
+        if (cur==sum && node.left==null && node.right==null){
+            return true;
+        }
+
+        boolean left=false;
+        if (node.left!=null){
+            left=sum(node.left,sum,cur);
+        }
+        boolean right=false;
+        if (node.right!=null){
+            right=sum(node.right,sum,cur);
+        }
+        return left || right;
+    }
+
+    //113. 路径总和 II
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> res=new ArrayList<>();
+        pathSumhelper(root,res,sum,new ArrayList<Integer>());
+        return res;
+    }
+
+    private void pathSumhelper(TreeNode node,List<List<Integer>> res,int sum,ArrayList<Integer> list){
+        if (node==null){
+            return;
+        }
+        list.add(node.val);
+        sum=sum-node.val;
+        if (sum==0&&node.left==null&&node.right==null){
+            res.add(new ArrayList<Integer>(list));
+        }
+        pathSumhelper(node.left,res,sum,list);
+        pathSumhelper(node.right,res,sum,list);
+        list.remove(list.size()-1);
+    }
+
 }

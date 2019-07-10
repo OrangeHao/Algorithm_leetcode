@@ -3,9 +3,12 @@ package com.orange.algorithm;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 
+import com.orange.algorithm.DataStructure.TreeNode;
 /**
  * created by czh on 2019/3/10
  */
@@ -214,5 +217,29 @@ public class v100 {
             res.add(temp);
         }
         return res;
+    }
+
+    //102. 二叉树的层次遍历
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result=new ArrayList<>();
+        Queue<TreeNode> queue=new LinkedList<>();
+        queue.add(root);
+        int level=0;
+        while (!queue.isEmpty()){
+            result.add(new ArrayList<Integer>());
+            int size=queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode  temp=queue.remove();
+                result.get(level).add(temp.val);
+                if (temp.left!=null){
+                    queue.add(temp.left);
+                }
+                if (temp.right!=null){
+                    queue.add(temp.right);
+                }
+            }
+            level++;
+        }
+        return result;
     }
 }
