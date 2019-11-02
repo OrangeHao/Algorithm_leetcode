@@ -379,4 +379,10 @@ public class v200 {
         }
     }
 
+    //198. 打家劫舍
+    //如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警
+    //dp=Math.Max()
+    public int rob(int[] nums) {
+
+    }
 }
