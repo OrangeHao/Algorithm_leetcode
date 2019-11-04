@@ -1,8 +1,10 @@
 package com.orange.algorithm;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
-import com.orange.algorithm.DataStructure.ListNode;
+import com.orange.algorithm.DataStructure.*;
 
 /**
  * created by czh on 2019/3/10
@@ -58,4 +60,27 @@ public class v300 {
         }
         return res;
     }
+
+    //257. 二叉树的所有路径
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> result=new ArrayList<>();
+        binaryTreePathsHelper(result,"",root);
+        return result;
+    }
+
+    private void binaryTreePathsHelper(List<String> result,String path,TreeNode node){
+        if (node==null){
+            return;
+        }
+        path+=node.val;
+        if (node.left==null&&node.right==null){
+            result.add(path);
+        }
+        if (node.left!=null || node.right!=null){
+            path+="->";
+            binaryTreePathsHelper(result,path,node.left);
+            binaryTreePathsHelper(result,path,node.right);
+        }
+    }
+
 }

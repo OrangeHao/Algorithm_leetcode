@@ -4,9 +4,12 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Stack;
+import com.orange.algorithm.DataStructure.*;
 
 /**
  * created by czh on 2019/3/10
@@ -45,5 +48,49 @@ public class v500 {
             cookie++;
         }
         return child;
+    }
+
+    //404. 左叶子之和
+    public int sumOfLeftLeaves(TreeNode root) {
+        return sumLeft(root,false);
+    }
+
+    public int sumLeft(TreeNode node,boolean isLeft) {
+        if (node==null){
+            return 0;
+        }
+        int result=0;
+        if (node.left==null && node.right==null){
+            if (isLeft){
+                result+=node.val;
+            }
+        }
+        if (node.left!=null){
+            result+=sumLeft(node.left,true);
+        }
+        if (node.right!=null){
+            result+=sumLeft(node.right,false);
+        }
+        return result;
+    }
+
+    //429. N叉树的层序遍历
+    public List<List<Integer>> levelOrder(Node root) {
+        List<List<Integer>> result=new ArrayList<>();
+        levelOrderHelper(result,root,1);
+        return result;
+    }
+
+    public void levelOrderHelper(List<List<Integer>> list,Node node,int level){
+        if (node==null){
+            return;
+        }
+        if (list.size()<level){
+            list.add(new ArrayList<Integer>());
+        }
+        list.get(level-1).add(node.val);
+        for (Node temp:node.children){
+            levelOrderHelper(list,temp,level+1);
+        }
     }
 }

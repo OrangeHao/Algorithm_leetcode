@@ -8,25 +8,12 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
-import java.util.logging.Level;
 
-import com.orange.algorithm.DataStructure.ListNode;
-
+import com.orange.algorithm.DataStructure.*;
 /**
  * created by czh on 2019/3/10
  */
 public class v200 {
-
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
-        }
-    }
-
     private class TreeResult {
         int depth;
         boolean isBTree;
@@ -346,4 +333,175 @@ public class v200 {
         list.remove(list.size()-1);
     }
 
+    //125. 验证回文串
+    public boolean isPalindrome(String s) {
+        int i=0;
+        int j=s.length()-1;
+        while(i<j){
+            while(!isChar(s.charAt(i)) && i<j){
+                i++;
+            }
+            while (!isChar(s.charAt(j)) && i<j){
+                j--;
+            }
+            char ic=s.charAt(i);
+            char jc=s.charAt(j);
+            if (ic>='A' && ic<='Z'){
+                ic=(char) (ic+32);
+            }
+            if (jc>='A' && jc<='Z'){
+                jc=(char) (jc+32);
+            }
+            if (ic!=jc){
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
+    }
+
+    public boolean isChar(char item){
+        if((item>='0' && item<='9')||(item>='a' && item<='z')){
+            return true;
+        }
+        return false;
+    }
+
+    //121. 买卖股票的最佳时机
+    public int maxProfit(int[] prices) {
+        int result=0;
+        for (int i = 0; i < prices.length; i++) {
+            int cur=prices[i];
+            for (int j = i+1; j < prices.length; j++) {
+                if (prices[j]>cur){
+                    result=Math.max(result,prices[j]-cur);
+                }
+            }
+        }
+        return result;
+    }
+    public int maxProfit2(int[] prices) {
+        int low=Integer.MAX_VALUE;
+        int hight=0;
+        for (int i = 0; i < prices.length; i++) {
+            if (prices[i]<low){
+                low=prices[i];
+            }else if (prices[i]-low>hight){
+                hight=prices[i]-low;
+            }
+        }
+        return hight;
+    }
+
+    //167. 两数之和 II - 输入有序数组
+    public int[] twoSum(int[] numbers, int target) {
+        for (int i = 0; i < numbers.length; i++) {
+            int left=target-numbers[i];
+            for (int j = i+1; j < numbers.length; j++) {
+                if (numbers[j]==left){
+                    return new int[]{i+1,j+1};
+                }
+                if (numbers[j]>left){
+                    break;
+                }
+            }
+        }
+        return new int[]{};
+    }
+
+    public int[] twoSum2(int[] numbers, int target) {
+        int i=0;
+        int j=numbers.length-1;
+        while (i<j){
+            int sum=numbers[i]+numbers[j];
+            if (target==sum){
+                return new int[]{i+1,j+1};
+            }
+            if (sum>target){
+                j--;
+            }
+            if (sum<target){
+                i++;
+            }
+        }
+        return new int[]{};
+    }
+
+    //168. Excel表列名称
+    public String convertToTitle(int n) {
+        StringBuilder sb=new StringBuilder();
+        while (n!=0){
+            sb.append((char)(n%26+64));
+            n=n/26;
+        }
+        sb.reverse();
+        return sb.toString();
+    }
+
+    //171. Excel表列序号
+    //  A -> 1
+    //    B -> 2
+    //    C -> 3
+    //    ...
+    //    Z -> 26
+    //    AA -> 27
+    //    AB -> 28
+    public int titleToNumber(String s) {
+        char[] list=s.toCharArray();
+        int sum=0;
+        for (int i = 0; i < list.length; i++) {
+            int val=list[i]-64;
+            sum+=val*Math.pow(26,list.length-1-i);
+        }
+        return sum;
+    }
+    public int titleToNumber2(String s) {
+        char[] list=s.toCharArray();
+        int sum=0;
+        for (int i = 0; i < list.length; i++) {
+            sum=sum*26+(list[i]-64);
+        }
+        return sum;
+    }
+
+
+    public int rob(int[] nums) {
+        int premax=0;
+        int curmax=0;
+        for (int x:nums){
+            int temp=curmax;
+            curmax=Math.max(premax+x,curmax);
+            premax=temp;
+        }
+        return curmax;
+    }
+
+
+    //202. 快乐数
+    public boolean isHappy(int n) {
+        int count=2000;
+        while (count>0){
+            n=getValue(n);
+            if (n==1){
+                return true;
+            }
+            count--;
+        }
+        return false;
+    }
+
+    public int getValue(int n){
+        int sum=0;
+        while (n>0){
+            sum+=Math.pow(n%10,2);
+            n/=10;
+        }
+        return sum;
+    }
+
+    //278. 第一个错误的版本
+    public int firstBadVersion(int n) {
+
+    }
 }
