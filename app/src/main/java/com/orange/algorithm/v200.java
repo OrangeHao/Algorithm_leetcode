@@ -73,14 +73,14 @@ public class v200 {
             if (headB != null && setA.contains(headB)) {
                 return headB;
             }
-            if (headA != null && headB != null && headA == headB){
+            if (headA != null && headB != null && headA == headB) {
                 return headA;
             }
-            if (headA!=null){
-                headA=headA.next;
+            if (headA != null) {
+                headA = headA.next;
             }
-            if (headB!=null){
-                headB=headB.next;
+            if (headB != null) {
+                headB = headB.next;
             }
         }
         return null;
@@ -92,7 +92,9 @@ public class v200 {
          定义两个指针, 第一轮让两个到达末尾的节点指向另一个链表的头部, 最后如果相遇则为交点(在第一轮移动中恰好抹除了长度差)
          两个指针等于移动了相同的距离, 有交点就返回, 无交点就是各走了两条指针的长度
          **/
-        if(headA == null || headB == null) return null;
+        if (headA == null || headB == null) {
+            return null;
+        }
         ListNode pA = headA, pB = headB;
         // 在这里第一轮体现在pA和pB第一次到达尾部会移向另一链表的表头, 而第二轮体现在如果pA或pB相交就返回交点, 不相交最后就是null==null
         while(pA != pB) {
@@ -154,10 +156,6 @@ public class v200 {
     }
 
 
-    //二叉树的层次遍历 II
-    public List<List<Integer>> levelOrderBottom(TreeNode root) {
-
-    }
 
     //144. 二叉树的前序遍历
     public List<Integer> preorderTraversal(TreeNode root) {
@@ -466,17 +464,6 @@ public class v200 {
     }
 
 
-    public int rob(int[] nums) {
-        int premax=0;
-        int curmax=0;
-        for (int x:nums){
-            int temp=curmax;
-            curmax=Math.max(premax+x,curmax);
-            premax=temp;
-        }
-        return curmax;
-    }
-
 
     //202. 快乐数
     public boolean isHappy(int n) {
@@ -500,8 +487,52 @@ public class v200 {
         return sum;
     }
 
+    //189. 旋转数组
+    public void rotate(int[] nums, int k) {
+        int size=nums.length;
+        int[]temp=new int[size];
+        for (int i = 0; i < size; i++) {
+            temp[(i+k)%size]=nums[i];
+        }
+        for (int i = 0; i < size; i++) {
+            nums[i]=temp[i];
+        }
+    }
+
+    public void rotate1(int[] nums, int k) {
+        int size=nums.length;
+        k%=size;
+        reverse(nums,0,size-1);
+        reverse(nums,0,k-1);
+        reverse(nums,k,size-1);
+    }
+
+    public void reverse(int[] array,int start,int end){
+        while (start<end){
+            int temp=array[start];
+            array[start]=array[end];
+            array[end]=temp;
+            start++;
+            end--;
+        }
+    }
+
+    //198. 打家劫舍
+    //如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警
+    //dp=Math.Max()
+    public int rob(int[] nums) {
+        int premax=0;
+        int curmax=0;
+        for (int x:nums){
+            int temp=curmax;
+            curmax=Math.max(premax+x,curmax);
+            premax=temp;
+        }
+        return curmax;
+    }
+
     //278. 第一个错误的版本
     public int firstBadVersion(int n) {
-
+        return 1;
     }
 }
