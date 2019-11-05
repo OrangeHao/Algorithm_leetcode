@@ -333,4 +333,39 @@ public class v300 {
             binaryTreePathsHelper(result,path,node.right);
         }
     }
+
+    //278. 第一个错误的版本
+    public int firstBadVersion(int n) {
+        int left=1;
+        int right=n;
+        while (right>left){
+            int mid=left+(right-left)/2;
+            if (isBadVersion(mid)){
+                right=mid;
+            }else {
+                left=mid+1;
+            }
+        }
+        return left;
+    }
+
+    public boolean isBadVersion(int value){
+        return value>0;
+    }
+
+    //283. 移动零
+    public void moveZeroes(int[] nums) {
+        int size=nums.length;
+        int []temp=new int[size];
+        int index=0;
+        for (int i = 0; i < size; i++) {
+            if (nums[i]!=0){
+                temp[index]=nums[i];
+                index++;
+            }
+        }
+        for (int i = 0; i < size; i++) {
+            nums[i]=temp[i];
+        }
+    }
 }
