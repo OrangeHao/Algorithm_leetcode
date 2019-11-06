@@ -21,16 +21,16 @@ public class v300 {
     //234. 回文链表
     public boolean isPalindrome(ListNode head) {
         Stack<Integer> mystack = new Stack<>();
-        ListNode temp=head;
-        while(temp!=null){
+        ListNode temp = head;
+        while (temp != null) {
             mystack.push(temp.val);
-            temp=temp.next;
+            temp = temp.next;
         }
-        while(head!=null){
-            if(head.val!=mystack.pop()){
+        while (head != null) {
+            if (head.val != mystack.pop()) {
                 return false;
             }
-            head=head.next;
+            head = head.next;
         }
         return true;
     }
@@ -42,16 +42,16 @@ public class v300 {
     // 进阶: 如果输入字符串包含 unicode 字符怎么办？你能否调整你的解法来应对这种情况？
     // 对字符串s，t排序，最后判断是否一一对应 用大小为26位的数组大小
     public boolean isAnagram(String s, String t) {
-        if(s.length()!=t.length()){
+        if (s.length() != t.length()) {
             return false;
         }
-        int []save=new int[26];
-        for(int i=0;i<s.length();i++){
-            save[s.charAt(i)-'a']++;
-            save[t.charAt(i)-'a']--;
+        int[] save = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            save[s.charAt(i) - 'a']++;
+            save[t.charAt(i) - 'a']--;
         }
-        for(int temp:save){
-            if(temp!=0){
+        for (int temp : save) {
+            if (temp != 0) {
                 return false;
             }
         }
@@ -60,10 +60,10 @@ public class v300 {
 
     //268. 缺失数字
     public int missingNumber(int[] nums) {
-        int res=nums.length;
+        int res = nums.length;
         for (int i = 0; i < nums.length; i++) {
-            res^=nums[i];
-            res^=i;
+            res ^= nums[i];
+            res ^= i;
         }
         return res;
     }
@@ -291,21 +291,21 @@ public class v300 {
     //263. 丑数
     //丑数就是只包含质因数 2, 3, 5 的正整数。
     public boolean isUgly(int num) {
-        while (true){
-            int temp=num;
-            if (num%2==0){
-                num=num/2;
+        while (true) {
+            int temp = num;
+            if (num % 2 == 0) {
+                num = num / 2;
             }
-            if ((num%3==0)){
-                num=num/3;
+            if ((num % 3 == 0)) {
+                num = num / 3;
             }
-            if (num%5==0){
-                num=num/5;
+            if (num % 5 == 0) {
+                num = num / 5;
             }
-            if (num==1){
+            if (num == 1) {
                 return true;
             }
-            if (num==temp){
+            if (num == temp) {
                 return false;
             }
         }
@@ -314,58 +314,117 @@ public class v300 {
 
     //257. 二叉树的所有路径
     public List<String> binaryTreePaths(TreeNode root) {
-        List<String> result=new ArrayList<>();
-        binaryTreePathsHelper(result,"",root);
+        List<String> result = new ArrayList<>();
+        binaryTreePathsHelper(result, "", root);
         return result;
     }
 
-    private void binaryTreePathsHelper(List<String> result, String path, DataStructure.TreeNode node){
-        if (node==null){
+    private void binaryTreePathsHelper(List<String> result, String path, DataStructure.TreeNode node) {
+        if (node == null) {
             return;
         }
-        path+=node.val;
-        if (node.left==null&&node.right==null){
+        path += node.val;
+        if (node.left == null && node.right == null) {
             result.add(path);
         }
-        if (node.left!=null || node.right!=null){
-            path+="->";
-            binaryTreePathsHelper(result,path,node.left);
-            binaryTreePathsHelper(result,path,node.right);
+        if (node.left != null || node.right != null) {
+            path += "->";
+            binaryTreePathsHelper(result, path, node.left);
+            binaryTreePathsHelper(result, path, node.right);
         }
     }
 
     //278. 第一个错误的版本
     public int firstBadVersion(int n) {
-        int left=1;
-        int right=n;
-        while (right>left){
-            int mid=left+(right-left)/2;
-            if (isBadVersion(mid)){
-                right=mid;
-            }else {
-                left=mid+1;
+        int left = 1;
+        int right = n;
+        while (right > left) {
+            int mid = left + (right - left) / 2;
+            if (isBadVersion(mid)) {
+                right = mid;
+            } else {
+                left = mid + 1;
             }
         }
         return left;
     }
 
-    public boolean isBadVersion(int value){
-        return value>0;
+    public boolean isBadVersion(int value) {
+        return value > 0;
     }
 
     //283. 移动零
     public void moveZeroes(int[] nums) {
-        int size=nums.length;
-        int []temp=new int[size];
-        int index=0;
+        int size = nums.length;
+        int[] temp = new int[size];
+        int index = 0;
         for (int i = 0; i < size; i++) {
-            if (nums[i]!=0){
-                temp[index]=nums[i];
+            if (nums[i] != 0) {
+                temp[index] = nums[i];
                 index++;
             }
         }
         for (int i = 0; i < size; i++) {
-            nums[i]=temp[i];
+            nums[i] = temp[i];
         }
     }
+
+
+    //290. 单词规律
+    public boolean wordPattern(String pattern, String str) {
+        Map<Character, String> map = new HashMap<>();
+        char[] pat = pattern.toCharArray();
+        String[] ori = str.split(" ");
+        if (pat.length != ori.length) {
+            return false;
+        }
+        for (int i = 0; i < pat.length; i++) {
+            if (map.containsKey(pat[i])) {
+                if (!ori[i].equals(map.get(pat[i]))) {
+                    return false;
+                }
+            } else if (map.containsValue(ori[i])) {
+                return false;
+            } else {
+                map.put(pat[i], ori[i]);
+            }
+        }
+        return true;
+    }
+
+
+
+    //292. Nim 游戏
+    public boolean canWinNim(int n) {
+        return n%4!=0;
+    }
+
+
+    //299. 猜数字游戏
+    public String getHint(String secret, String guess) {
+        int[] bucket = new int[10];
+        int bull = 0;
+        int cow = 0;
+        for(int i=0;i<secret.length();i++){
+            if(secret.charAt(i)== guess.charAt(i)){
+                bull++;
+                continue;
+            }
+            bucket[secret.charAt(i) - '0'] += 1;
+            bucket[guess.charAt(i) - '0'] -= 1;
+
+        }
+        //计算bucket中正值的个数
+        for(int i=0;i<10;i++){
+            if(bucket[i] > 0) {
+                cow+= bucket[i];
+            }
+        }
+
+        cow = secret.length() - cow - bull;
+        String res = bull + "A" + cow + "B";
+        return res;
+    }
+
+
 }
