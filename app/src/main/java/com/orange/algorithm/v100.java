@@ -257,4 +257,43 @@ public class v100 {
         sb.append(ca==1?ca:"");
         return sb.reverse().toString();
     }
+
+
+    //4. 寻找两个有序数组的中位数
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int length=(nums1.length+nums2.length);
+        int mid=length/2+1;
+        int i=0;
+        int j=0;
+        double result=0;
+        while (mid>0){
+            double temp=0;
+           if (i<nums1.length && j<nums2.length){
+               if (nums1[i]<nums2[j]){
+                   temp=nums1[i];
+                   i++;
+               }else {
+                   temp=nums2[j];
+                   j++;
+               }
+           }else if (i>=nums1.length){
+               temp=nums2[j];
+               j++;
+           }else if (j>=nums2.length){
+               temp=nums1[i];
+               i++;
+           }
+           if (mid==2 && length%2==0){
+               result=result+temp;
+           }
+           if (mid==1){
+               result+=temp;
+           }
+            mid--;
+        }
+        if (length%2==0){
+            return result/2;
+        }
+        return result;
+    }
 }

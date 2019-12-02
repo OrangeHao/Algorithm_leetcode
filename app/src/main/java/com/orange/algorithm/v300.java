@@ -368,4 +368,20 @@ public class v300 {
             nums[i]=temp[i];
         }
     }
+
+    public void moveZeroes2(int[] nums) {
+        int curZeroCount=0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i]==0){
+                curZeroCount++;
+            }else {
+                if (curZeroCount==0){
+                    continue;
+                }
+                nums[i-curZeroCount]=nums[i];
+                nums[i]=0;
+            }
+        }
+
+    }
 }
