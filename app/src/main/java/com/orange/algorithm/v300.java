@@ -42,7 +42,7 @@ public class v300 {
     // 进阶: 如果输入字符串包含 unicode 字符怎么办？你能否调整你的解法来应对这种情况？
     // 对字符串s，t排序，最后判断是否一一对应 用大小为26位的数组大小
     public boolean isAnagram(String s, String t) {
-        if(s.length()!=t.length()){
+        if (s.length() != t.length()) {
             return false;
         }
         int []save=new int[26];
@@ -384,4 +384,62 @@ public class v300 {
         }
 
     }
+
+    //290. 单词规律
+    public boolean wordPattern(String pattern, String str) {
+        Map<Character, String> map = new HashMap<>();
+        char[] pat = pattern.toCharArray();
+        String[] ori = str.split(" ");
+        if (pat.length != ori.length) {
+            return false;
+        }
+        for (int i = 0; i < pat.length; i++) {
+            if (map.containsKey(pat[i])) {
+                if (!ori[i].equals(map.get(pat[i]))) {
+                    return false;
+                }
+            } else if (map.containsValue(ori[i])) {
+                return false;
+            } else {
+                map.put(pat[i], ori[i]);
+            }
+        }
+        return true;
+    }
+
+
+
+    //292. Nim 游戏
+    public boolean canWinNim(int n) {
+        return n%4!=0;
+    }
+
+
+    //299. 猜数字游戏
+    public String getHint(String secret, String guess) {
+        int[] bucket = new int[10];
+        int bull = 0;
+        int cow = 0;
+        for(int i=0;i<secret.length();i++){
+            if(secret.charAt(i)== guess.charAt(i)){
+                bull++;
+                continue;
+            }
+            bucket[secret.charAt(i) - '0'] += 1;
+            bucket[guess.charAt(i) - '0'] -= 1;
+
+        }
+        //计算bucket中正值的个数
+        for(int i=0;i<10;i++){
+            if(bucket[i] > 0) {
+                cow+= bucket[i];
+            }
+        }
+
+        cow = secret.length() - cow - bull;
+        String res = bull + "A" + cow + "B";
+        return res;
+    }
+
+
 }
