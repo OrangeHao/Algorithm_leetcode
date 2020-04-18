@@ -1526,18 +1526,18 @@ public class v100 {
             for (int i = num2.length() - 1; i >= 0; i--) {
                 int n1 = num2.charAt(i) - '0';
                 for (int j = num1.length() - 1; j >= 0; j--) {
-                    int n2=num1.charAt(j)-'0';
-                    int current=n1*n2;
-                    int sum=current+result[i+j+1];
+                    int n2 = num1.charAt(j) - '0';
+                    int current = n1 * n2;
+                    int sum = current + result[i + j + 1];
                     //update result[i+j,i+j+1]; 本位和进位
-                    result[i+j+1]=sum%10;
-                    result[i+j]=result[i+j]+sum/10;
+                    result[i + j + 1] = sum % 10;
+                    result[i + j] = result[i + j] + sum / 10;
                 }
             }
 
-            StringBuilder sb=new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             int i = 0;
-            while (result[i]==0){
+            while (result[i] == 0) {
                 i++;
             }
             for (; i < result.length; i++) {
@@ -1551,23 +1551,24 @@ public class v100 {
         public String multiply2(String num1, String num2) {
             int sumLen = num1.length() + num2.length();
             int[] res = new int[sumLen];
-            for(int i = 0; i< num1.length(); i++) {
-                int num11 = num1.charAt(num1.length() -1 - i ) - '0';//3
-                for(int j  = 0; j< num2.length(); j++) {
-                    int num22 = num2.charAt(num2.length() -1 - j) - '0';//6,5,4
-                    res[i +j ] += num11 * num22;            //序列和相同相加
+            for (int i = 0; i < num1.length(); i++) {
+                int num11 = num1.charAt(num1.length() - 1 - i) - '0';//3
+                for (int j = 0; j < num2.length(); j++) {
+                    int num22 = num2.charAt(num2.length() - 1 - j) - '0';//6,5,4
+                    res[i + j] += num11 * num22;            //序列和相同相加
                 }
             }
-            for(int i = 0; i< res.length - 1; i++) {
-                if(res[i] >= 10) {
-                    res[i+1] += res[i] / 10;//后位加上
+            for (int i = 0; i < res.length - 1; i++) {
+                if (res[i] >= 10) {
+                    res[i + 1] += res[i] / 10;//后位加上
                     res[i] %= 10;//余数
                 }
             }
-            int i = res.length -1;
-            for(; i> 0 && res[i] == 0; i--) {} // 去除结果前面的 0
+            int i = res.length - 1;
+            for (; i > 0 && res[i] == 0; i--) {
+            } // 去除结果前面的 0
             StringBuilder sb = new StringBuilder();
-            for(; i>=0; i--) {
+            for (; i >= 0; i--) {
                 sb.append(res[i]);
             }
             return sb.toString();
@@ -1583,19 +1584,16 @@ public class v100 {
             int starIdx = -1, sTmpIdx = -1;
 
             while (sIdx < sLen) {
-                if (pIdx < pLen && (p.charAt(pIdx) == '?' || p.charAt(pIdx) == s.charAt(sIdx))){
+                if (pIdx < pLen && (p.charAt(pIdx) == '?' || p.charAt(pIdx) == s.charAt(sIdx))) {
                     ++sIdx;
                     ++pIdx;
-                }
-                else if (pIdx < pLen && p.charAt(pIdx) == '*') {
+                } else if (pIdx < pLen && p.charAt(pIdx) == '*') {
                     starIdx = pIdx;
                     sTmpIdx = sIdx;
                     ++pIdx;
-                }
-                else if (starIdx == -1) {
+                } else if (starIdx == -1) {
                     return false;
-                }
-                else {
+                } else {
                     pIdx = starIdx + 1;
                     sIdx = sTmpIdx + 1;
                     sTmpIdx = sIdx;
@@ -1603,38 +1601,38 @@ public class v100 {
             }
 
             // The remaining characters in the pattern should all be '*' characters
-            for(int i = pIdx; i < pLen; i++)
+            for (int i = pIdx; i < pLen; i++)
                 if (p.charAt(i) != '*') return false;
             return true;
         }
 
         public boolean isMatch1(String s, String p) {
             int sLen = s.length(), pLen = p.length();
-            int sIndex=0,pIndex=0;
-            int sStarSaveIndex=-1,pStarIndex=-1;
+            int sIndex = 0, pIndex = 0;
+            int sStarSaveIndex = -1, pStarIndex = -1;
 
-            while (sIndex<sLen){
-                if (pIndex<pLen && (s.charAt(sIndex)==p.charAt(pIndex) || p.charAt(pIndex)=='?')){
+            while (sIndex < sLen) {
+                if (pIndex < pLen && (s.charAt(sIndex) == p.charAt(pIndex) || p.charAt(pIndex) == '?')) {
                     sIndex++;
                     pIndex++;
-                }else if (pIndex<pLen && p.charAt(pIndex)=='*'){
-                    sStarSaveIndex=sIndex;
-                    pStarIndex=pIndex;
+                } else if (pIndex < pLen && p.charAt(pIndex) == '*') {
+                    sStarSaveIndex = sIndex;
+                    pStarIndex = pIndex;
                     pIndex++;
-                }else {  //nothing match
+                } else {  //nothing match
                     //no star before
-                    if (sStarSaveIndex==-1){
+                    if (sStarSaveIndex == -1) {
                         return false;
-                    }else {
-                        sIndex=sStarSaveIndex+1;
-                        pIndex=pStarIndex+1;
-                        sStarSaveIndex=sIndex;
+                    } else {
+                        sIndex = sStarSaveIndex + 1;
+                        pIndex = pStarIndex + 1;
+                        sStarSaveIndex = sIndex;
                     }
                 }
             }
 
             for (int i = pIndex; i < pLen; i++) {
-                if (p.charAt(i)!='*')return false;
+                if (p.charAt(i) != '*') return false;
             }
 
             return true;
@@ -1648,21 +1646,22 @@ public class v100 {
          * 1如果某一个作为 起跳点 的格子可以跳跃的距离是 3，那么表示后面 3 个格子都可以作为 起跳点。
          * 2可以对每一个能作为 起跳点 的格子都尝试跳一次，把 能跳到最远的距离 不断更新。
          * 3如果可以一直跳到最后，就成功了。
-         *
+         * <p>
          * 作者：ikaruga
          * 链接：https://leetcode-cn.com/problems/jump-game/solution/55-by-ikaruga/
          * 来源：力扣（LeetCode）
          * 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+         *
          * @param nums
          * @return
          */
         public boolean canJump(int[] nums) {
-            int k=0;
+            int k = 0;
             for (int i = 0; i < nums.length; i++) {
-                if (i>k){
+                if (i > k) {
                     return false;
                 }
-                k=Math.max(k,i+nums[i]);
+                k = Math.max(k, i + nums[i]);
             }
             return true;
         }
@@ -1670,39 +1669,39 @@ public class v100 {
 
     //45. 跳跃游戏 II
     class Solution45 {
-        public  int jump(int[] nums) {
-            if (nums.length==1){
+        public int jump(int[] nums) {
+            if (nums.length == 1) {
                 return 0;
             }
-            int curIndex=0;
-            int count=1;
-            int targetIndex=nums.length-1;
-            while (curIndex<=targetIndex){
-                if (nums[curIndex]+curIndex>=targetIndex){
+            int curIndex = 0;
+            int count = 1;
+            int targetIndex = nums.length - 1;
+            while (curIndex <= targetIndex) {
+                if (nums[curIndex] + curIndex >= targetIndex) {
                     return count;
                 }
-                int nextIndex=findMax(nums,curIndex);
-                System.out.print("index:"+nextIndex+"\n");
-                if (nextIndex==targetIndex){
-                    return count+1;
-                }else {
-                    curIndex=nextIndex;
+                int nextIndex = findMax(nums, curIndex);
+                System.out.print("index:" + nextIndex + "\n");
+                if (nextIndex == targetIndex) {
+                    return count + 1;
+                } else {
+                    curIndex = nextIndex;
                 }
                 count++;
             }
             return count;
         }
 
-        public  int findMax(int[] nums,int index){
-            int maxIndex=index+1;
-            int temp=0;
-            for (int i = index+1; i <=nums[index]+index && i<nums.length; i++) {
-                if (i+nums[i]>=nums.length-1){
-                    return nums.length-1;
+        public int findMax(int[] nums, int index) {
+            int maxIndex = index + 1;
+            int temp = 0;
+            for (int i = index + 1; i <= nums[index] + index && i < nums.length; i++) {
+                if (i + nums[i] >= nums.length - 1) {
+                    return nums.length - 1;
                 }
-                if (i+nums[i]>temp){
-                    temp=nums[i]+i;
-                    maxIndex=i;
+                if (i + nums[i] > temp) {
+                    temp = nums[i] + i;
+                    maxIndex = i;
                 }
             }
             return maxIndex;
@@ -1710,13 +1709,13 @@ public class v100 {
 
 
         public int jump1(int[] nums) {
-            int end=0;
-            int maxPosition=0;
-            int count=0;
+            int end = 0;
+            int maxPosition = 0;
+            int count = 0;
             for (int i = 0; i < nums.length - 1; i++) {
-                maxPosition=Math.max(maxPosition,nums[i]+i);
-                if (i==end){
-                    end=maxPosition;
+                maxPosition = Math.max(maxPosition, nums[i] + i);
+                if (i == end) {
+                    end = maxPosition;
                     count++;
                 }
             }
@@ -1727,26 +1726,26 @@ public class v100 {
     //46. 全排列
     class Solution46 {
 
-        List<List<Integer>> result=new ArrayList<>();
+        List<List<Integer>> result = new ArrayList<>();
 
         int length;
         int[] nums;
 
         public List<List<Integer>> permute(int[] nums) {
-            this.length=nums.length;
-            this.nums=nums;
+            this.length = nums.length;
+            this.nums = nums;
             selected(new Stack<Integer>());
             return result;
         }
 
-        public void selected(Stack<Integer> stack){
-            if (stack.size()==length){
+        public void selected(Stack<Integer> stack) {
+            if (stack.size() == length) {
                 result.add(new ArrayList<>(stack));
                 return;
             }
 
             for (int i = 0; i < length; i++) {
-                if (stack.contains(nums[i])){
+                if (stack.contains(nums[i])) {
                     continue;
                 }
                 stack.push(nums[i]);
@@ -1759,39 +1758,39 @@ public class v100 {
     //47. 全排列 II
     class Solution47 {
 
-        List<List<Integer>> result=new ArrayList<>();
+        List<List<Integer>> result = new ArrayList<>();
 
         int length;
         int[] nums;
-        boolean[]used;
+        boolean[] used;
 
         public List<List<Integer>> permuteUnique(int[] nums) {
-            this.length=nums.length;
-            this.nums=nums;
+            this.length = nums.length;
+            this.nums = nums;
             Arrays.sort(this.nums);
-            used=new boolean[length];
-            selected(0,new Stack<Integer>());
+            used = new boolean[length];
+            selected(0, new Stack<Integer>());
             return result;
         }
 
-        public void selected(int level,Stack<Integer> stack){
-            if (level==length){
+        public void selected(int level, Stack<Integer> stack) {
+            if (level == length) {
                 result.add(new ArrayList<>(stack));
                 return;
             }
 
             for (int i = 0; i < length; i++) {
-                if (!used[i]){
+                if (!used[i]) {
 
-                    if (i>0 && nums[i]==nums[i-1] && !used[i-1]){
+                    if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) {
                         continue;
                     }
 
-                    used[i]=true;
+                    used[i] = true;
                     stack.push(nums[i]);
-                    selected(level+1,stack);
+                    selected(level + 1, stack);
                     stack.pop();
-                    used[i]=false;
+                    used[i] = false;
                 }
             }
         }
@@ -1800,22 +1799,103 @@ public class v100 {
 
     //48. 旋转图像
     public void rotate(int[][] matrix) {
-        int n=matrix.length;
+        int n = matrix.length;
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                int temp=matrix[i][j];
-                matrix[i][j]=matrix[j][i];
-                matrix[j][i]=temp;
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
             }
         }
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n / 2; j++) {
-                int temp=matrix[i][j];
-                matrix[i][j]=matrix[i][n-j-1];
-                matrix[i][n-j-1]=temp;
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[i][n - j - 1];
+                matrix[i][n - j - 1] = temp;
             }
+        }
+    }
+
+    //49. 字母异位词分组
+    public List<List<String>> groupAnagrams(String[] strs) {
+        if (strs.length == 0) return new ArrayList<>();
+        HashMap<String, List<String>> map = new HashMap<>();
+        for (String str : strs) {
+            char[] temp = str.toCharArray();
+            Arrays.sort(temp);
+            String key = String.valueOf(temp);
+            if (!map.containsKey(key)) {
+                map.put(key, new ArrayList<String>());
+            }
+            map.get(key).add(str);
+        }
+        return new ArrayList<>(map.values());
+    }
+
+    //50. Pow(x, n)
+    class solution50 {
+        private double fastPow(double x, long n) {
+            if (n == 0) {
+                return 1.0;
+            }
+            double half = fastPow(x, n / 2);
+            if (n % 2 == 0) {
+                return half * half;
+            } else {
+                return half * half * x;
+            }
+        }
+
+        public double myPow(double x, int n) {
+            long N = n;
+            if (N < 0) {
+                x = 1 / x;
+                N = -N;
+            }
+            return fastPow(x, N);
+        }
+    }
+
+
+    //52 N queen
+    class Solution52 {
+        public boolean is_not_under_attack(int row, int col, int n, int[] rows, int[] hills, int[] dales) {
+            int res = rows[col] + hills[row - col + 2 * n] + dales[row + col];
+            return (res == 0) ? true : false;
+        }
+
+        public int backtrack(int row, int count, int n, int[] rows, int[] hills, int[] dales) {
+            for (int col = 0; col < n; col++) {
+                if (is_not_under_attack(row, col, n, rows, hills, dales)) {
+                    // place_queen
+                    rows[col] = 1;
+                    hills[row - col + 2 * n] = 1;  // "hill" diagonals
+                    dales[row + col] = 1;   //"dale" diagonals
+
+                    // if n queens are already placed
+                    if (row + 1 == n) count++;
+                        // if not proceed to place the rest
+                    else count = backtrack(row + 1, count, n,
+                            rows, hills, dales);
+                    // remove queen
+                    rows[col] = 0;
+                    hills[row - col + 2 * n] = 0;
+                    dales[row + col] = 0;
+                }
+            }
+            return count;
+        }
+
+        public int totalNQueens(int n) {
+            int rows[] = new int[n];
+            // "hill" diagonals
+            int hills[] = new int[4 * n - 1];
+            // "dale" diagonals
+            int dales[] = new int[2 * n - 1];
+
+            return backtrack(0, 0, n, rows, hills, dales);
         }
     }
 }
